@@ -1,0 +1,63 @@
+/* Ingresa las variables tal y como se planearon en la guia de estilos */
+
+:root {
+    /* Primary color */
+    --color-primary-50: #F0F9FF; 
+    --color-primary-100: #E0F2FE;    
+    --color-primary-200: #BAE6FD;
+    --color-primary-300: #7DD3FC;
+    --color-primary-400: #38BDF8;
+    --color-primary-500: #0EA5E9;
+    --color-primary-600: #0284C7;
+    --color-primary-700: #0369A1;
+    --color-primary-800: #075985;
+    --color-primary-900: #0C4A6E;
+    --color-primary-950: #082F49;
+    
+    /* Secundary color */
+    --color-secundary-50: #f1fcfb;
+    --color-secundary-100: #cef9f4;
+    --color-secundary-200: #9df2e9;
+    --color-secundary-300: #65e3db;
+    --color-secundary-400: #48d1cc;
+    --color-secundary-500: #1cb0ad;
+    --color-secundary-600: #138e8e;
+    --color-secundary-700: #147071;
+    --color-secundary-800: #15585a;
+    --color-secundary-900: #16494b;
+    --color-secundary-950: #062b2d;
+
+    /* Basic color */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray-50: #181818;
+    --color-gray-100: #242424;
+    --color-gray-200: #3D3D3D;
+    --color-gray-300: #565656;
+    --color-gray-400: #6E6E6E;
+    --color-gray-500: #878787;
+    --color-gray-600: #9F9F9F;
+    --color-gray-700: #B8B8B8;
+    --color-gray-800: #D1D1D1;
+    --color-gray-900: #E9E9E9;
+    --color-gray-950: #F6F6F6;
+
+    /* Typografhy */
+    --main-font: Helvetica, Nimbus Sans L;
+
+    /* Font variant */
+
+
+    /* Font size */
+    --fs-xxxxl: 5rem; /* Ultra grande*/
+    --fs-xxxxl: 4rem; /* Super grande*/
+    --fs-xxxxl: 3rem; /* Extra grande*/
+    --fs-xxxxl: 2.5rem; /* Muy grande*/
+    --fs-xxxxl: 2rem; /* Grande*/
+    --fs-xxxxl: 1.5rem; /* Mediano*/
+    --fs-xxxxl: 1.25rem; /* Pequeño*/
+    --fs-xxxxl: 1rem; /* Base*/
+    --fs-xxxxl: 0.875rem; /* Extra extra pequeña*/
+    --fs-xxxxl: 0.75rem; /* Minimo*/
+    --fs-xxxxl: 0.5rem; /* Super minimo*/
+}
