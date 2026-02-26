@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "@/shared/layout/MainLayout";
+import ProfilePage from "@/features/users/pages/ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "videos",
         element: <h1 className="p-4"> Videos </h1>,
+      },
+      {
+        path: "perfil",
+        element: <ProfilePage />,
       },
     ],
   },
