@@ -2,7 +2,7 @@ import { Search, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Navbar = ({variant = "solid"}) => {
+const Navbar = ({variant = "transparent"}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -12,14 +12,14 @@ const Navbar = ({variant = "solid"}) => {
       : "bg-background border-border"
 
     }`}>
-      
+
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo de marca */}
           <div className="flex items-center">
-            <a href="/" className="text-xl font-bold">
+            <Link to="/" className="text-xl font-bold">
               Rico Programar
-            </a>
+            </Link>
           </div>
 
           {/* Links de navegación */}
