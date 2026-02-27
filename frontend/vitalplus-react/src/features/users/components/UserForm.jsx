@@ -31,7 +31,7 @@ export default function UserForm() {
   return (
     <div>
       {/* Formulario para crear el usuario */}
-      <form>
+      <form className="px-6 py-12 grid grid-cols-1 gap-6 bg-white/50 dark:bg-neutral-800/20 backdrop-blur-sm shadow-xl ring-1 rounded-xs">
         <Input
           label="Nombre"
           placeholder="Ingrese su nombre"

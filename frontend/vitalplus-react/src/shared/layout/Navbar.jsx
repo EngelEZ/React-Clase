@@ -79,8 +79,9 @@ const Navbar = ({variant = "transparent"}) => {
                   <ul className="py-2 text-sm">
                     <li>
                       <Link
-                        to="/perfil"
-                        className="block px-4 py-2 hover:bg-surface transition"
+                        to="/login"
+                          className="block px-4 py-2 grid-cols-1 gap-6 bg-white/50 dark:bg-neutral-800/20 backdrop-blur-sm shadow-xl ring-1 rounded-xs"
+                        // className="block px-4 py-2 hover:bg-surface transition"
                         onClick={() => setIsOpen(false)}
                       >
                         Perfil
