@@ -1,12 +1,18 @@
 import Input from "@/shared/components/Input";
-import Button from "@/shared/components/Button";
+import {Button} from "@/shared/components";
 import Select from "@/shared/components/Select";
 // import selectService from "@/features/users/services/selectService";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getDocumentTypes } from "../services/selectService";
+import {AvatarUploader} from "@/shared/components";
+
+
 
 export default function UserForm() {
+
+  const [avatarUrl, setAvatarUrl] = useState(null);
+
   const [documentTypes, setDocumentTypes] = useState([]);
 
   useEffect(() => {
@@ -49,6 +55,15 @@ export default function UserForm() {
           name="documentType"
           options={documentTypes}
         ></Select>
+
+        <div className="w-[320px] text-white">
+          <AvatarUploader onChange={setAvatarUrl} />
+          {avatarUrl && (
+            <p className="mt-4 text-sm text-gray-400">
+              URL guardada en BD: {avatarUrl}
+            </p>
+          )}
+        </div>
 
         {/* Actions */}
         <div className="flex flex-items-center justify-center gap-12">
