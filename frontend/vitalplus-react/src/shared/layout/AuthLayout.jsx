@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import authBg from "@/assets/images/prueba.jpg";
-import { UserForm } from "@/features/users";
+// import { UserForm } from "@/features/users";
 
 export default function AuthLayout() {
   return (
@@ -17,7 +17,7 @@ export default function AuthLayout() {
       {/* Contenido externo que se inyecta  */}
       <main className="mx-auto">
         <Outlet />
-        <UserForm />
+        {/* <UserForm /> */}
       </main>
     </div>
   );

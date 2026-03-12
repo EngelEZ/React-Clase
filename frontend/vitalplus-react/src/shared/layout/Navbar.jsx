@@ -2,17 +2,18 @@ import { Search, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const Navbar = ({variant = "transparent"}) => {
+const Navbar = ({ variant = "transparent" }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className= {`w-full border-b transition-colors duration-300"
-      ${ variant === "transparent" 
-      ? "bg-transparent border-transparent absolute top-0 left-0 z-30"
-      : "bg-background border-border"
-
-    }`}>
-
+    <nav
+      className={`w-full border-b transition-colors duration-300"
+      ${
+        variant === "transparent"
+          ? "bg-transparent border-transparent absolute top-0 left-0 z-30"
+          : "bg-background border-border"
+      }`}
+    >
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo de marca */}
@@ -30,8 +31,8 @@ const Navbar = ({variant = "transparent"}) => {
               </Link>
             </li>
             <li>
-              <Link to="/cursos" className="hover:text-primary transition">
-                Cursos
+              <Link to="/usuario" className="hover:text-primary transition">
+                Usuario
               </Link>
             </li>
             <li>
@@ -80,7 +81,7 @@ const Navbar = ({variant = "transparent"}) => {
                     <li>
                       <Link
                         to="/login"
-                          className="block px-4 py-2 grid-cols-1 gap-6 bg-white/50 dark:bg-neutral-800/20 backdrop-blur-sm shadow-xl ring-1 rounded-xs"
+                        className="block px-4 py-2 grid-cols-1 gap-6 bg-white/50 dark:bg-neutral-800/20 backdrop-blur-sm shadow-xl ring-1 rounded-xs"
                         // className="block px-4 py-2 hover:bg-surface transition"
                         onClick={() => setIsOpen(false)}
                       >
