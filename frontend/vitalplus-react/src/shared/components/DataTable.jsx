@@ -112,7 +112,7 @@ export default function DataTable({ data, columns }) {
 
                   <th
                     key={header.id}
-                    className="p-3 text-left border-b"
+                    className="p-3 text-left border-b border-r last:border-r-0"
                   >
 
                     {/* 
@@ -146,7 +146,7 @@ export default function DataTable({ data, columns }) {
                 {/* Celdas visibles de cada fila */}
                 {row.getVisibleCells().map(cell => (
 
-                  <td key={cell.id} className="p-3 border-b">
+                  <td key={cell.id} className="p-3 border-b border-r last:border-r-0">
 
                     {/* Render dinámico del contenido de la celda */}
                     {flexRender(
