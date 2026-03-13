@@ -27,6 +27,13 @@
     /* ====== State ======== */
     --semantic-warning: var(--color-secundary-950);
 
+
+    /* Typografhy */
+
+    --semantic-font-size-caption: var(--fs-xxxl);
+
+
+
     /* ================================================ */
     /*          YA NO DEPENDEMOS DE NOMBRES DE COLOR,
                     DEPENDEMOS ES DE INTENCION 

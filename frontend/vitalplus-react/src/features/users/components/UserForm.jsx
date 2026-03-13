@@ -1,90 +1,175 @@
-import Input from "@/shared/components/Input";
-import {Button} from "@/shared/components";
-import Select from "@/shared/components/Select";
-// import selectService from "@/features/users/services/selectService";
-import { useEffect } from "react";
-import { useState } from "react";
+import { Input, Button, Select } from "@/shared/components";
+import { useEffect, useState } from "react";
 import { getDocumentTypes } from "../services/selectService";
-import {AvatarUploader} from "@/shared/components";
+import { AvatarUploader } from "@/shared/components";
+import { userSchema } from "../schemas/userSchema";
 
 
 
 export default function UserForm() {
 
-  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    documentType: "",
+    documentNumber: "",
+    password: "",
+    avatarUrl: null,
+  })
+  // ===================================== Handler ===============================
 
-  const [documentTypes, setDocumentTypes] = useState([]);
+  // Función que se ejecuta cada vez que cambia el valor de un input del formulario 
+  const handleChange = (e) => {
+    // Se obtiene el nombre del campo (name) y su valor actual (value) 
+    // desde el elemento que disparó el evento 
+    const { name, value } = e.target;
+    // Se actualiza el estado del formulario 
+    // prev representa el estado anterior del formulario 
+    setFormData((prev) => ({
+      // Se copian todos los valores anteriores del estado 
+      ...prev,
+      // Se actualiza únicamente el campo que cambió 
+      // [name] permite usar el nombre del input como clave dinámica 
+      [name]: value,
+    }));
+  }
 
-  useEffect(() => {
-    getDocumentTypes().then(setDocumentTypes);
-  });
-  // const handleNameChange = (e) => {
-  //   console.log("Nombre del usuario: ", e.target.value);
-  // };
+// ==================================================
 
-  const handleEmailBlur = (e) => {
-    console.log("Email del usuario: ", e.target.value);
-  };
-
-  // Una validación basica
-  const handleNameChange = (e) => {
-    console.log("Nombre del usuario: ", e.target.value);
-    if (e.target.value === "") {
-      console.log("Este campo no puede estar vacio");
+  // Es la función que se ejecuta cuando se envía un documento
+  //============== HANDLE SUBMIT ============== 
+  // Función que se ejecuta cuando se envía el formulario 
+  const handleSubmit = (e) => {
+    // Evita que el formulario recargue la página 
+    e.preventDefault();
+    // Se valida el objeto formData usando el esquema definido con Zod 
+    // safeParse devuelve un objeto indicando si la validación fue exitosa o no 
+    const result = userSchema.safeParse(formData);
+    // Si la validación falla 
+    if (!result.success) {
+      // Objeto donde se almacenarán los errores por campo 
+      const fieldErrors = {};
+      // Zod devuelve los errores en un arreglo llamado issues 
+      // Se recorren para asociar cada error a su campo correspondiente 
+      result.error.issues.forEach((issue) => {
+        // issue.path contiene la ruta del campo que falló 
+        const field = issue.path[0];
+        // Se guarda el mensaje de error en el objeto fieldErrors 
+        fieldErrors[field] = issue.message;
+      });
+      // Se actualiza el estado de errores para mostrarlos en el formulario 
+      setErrors(fieldErrors);
+      // Se detiene la ejecución porque el formulario tiene errores 
+      return;
     }
+    // Si la validación es exitosa se limpian los errores anteriores 
+    setErrors({});
+    // result.data contiene los datos ya validados por Zod 
+    console.log("Usuario válido:", result.data);
   };
 
-  return (
-    <div>
-      {/* Formulario para crear el usuario */}
-      <form className="px-6 py-12 grid grid-cols-1 gap-6 bg-white/50 dark:bg-neutral-800/20 backdrop-blur-sm shadow-xl ring-1 rounded-xs">
-        <Input
-          label="Nombre"
-          placeholder="Ingrese su nombre"
-          onChange={handleNameChange}
-        ></Input>
 
-        <Input
-          label="Email"
-          placeholder="Ingrese su email"
-          onBlur={handleEmailBlur}
-        ></Input>
 
-        <Select
-          label="Tipos de documento"
-          name="documentType"
-          options={documentTypes}
-        ></Select>
+// Estado de los errores
+    const [errors, setErrors] = useState({});
+    const [documentTypes, setDocumentTypes] = useState([]);
 
-        <div className="w-[320px] text-white">
-          <AvatarUploader onChange={setAvatarUrl} />
-          {avatarUrl && (
-            <p className="mt-4 text-sm text-gray-400">
-              URL guardada en BD: {avatarUrl}
-            </p>
-          )}
-        </div>
+    useEffect(() => {
+      getDocumentTypes().then(setDocumentTypes);
+    }, []);
 
-        {/* Actions */}
-        <div className="flex flex-items-center justify-center gap-12">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => console.log("Oprimió cancelar")}
-          >
-            Cancelar
-          </Button>
+    return (
+      <div className="my-0 mx-auto w-max pt-20">
+        {/* Formulario para crear el usuario */}
+        <form
+          onSubmit={handleSubmit}
+          className="px-6 py-12 grid grid-cols-2 gap-6 bg-white/50 dark:bg-neutral-800/20 backdrop-blur-sm shadow-xl ring-1 rounded-xs">
+          <Input
+            label="Nombre"
+            name="name"
+            placeholder="Ingrese su nombre"
+            value={formData.name}
+            onChange={handleChange}
+            error={errors.name}
+          ></Input>
 
-          <Button
-            variant="primary"
-            size="md"
-            type="submit"
-            onClick={() => console.log("Oprimió guardar")}
-          >
-            Guardar
-          </Button>
-        </div>
-      </form>
-    </div>
-  );
-}
+          <Input
+            label="Email"
+            name="email"
+            placeholder="Ingrese su email"
+            value={formData.email}
+            onChange={handleChange}
+            error={errors.email}
+          ></Input>
+
+          <Input
+            type="tel"
+            label="Telefono"
+            name="phone"
+            placeholder="Ingrese su telefono"
+            value={formData.phon}
+            onChange={handleChange}
+            error={errors.phone}
+          ></Input>
+
+          <Select
+            label="Tipos de documento"
+            name="documentType"
+            value={formData.documentType}
+            options={documentTypes}
+            onChange={handleChange}
+            error={errors.documentType}
+          ></Select>
+
+          <Input
+            label="Numero de documento"
+            name="documentNumber"
+            placeholder="Ingrese su numero de documento"
+            value={formData.documentNumber}
+            onChange={handleChange}
+            error={errors.documentNumber}
+          ></Input>
+
+          <Input
+            type="password"
+            label="Contraseña"
+            name="password"
+            placeholder="Ingrese su contraseña"
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+          ></Input>
+
+          <AvatarUploader
+            onUpload={(url) =>
+              setFormData((prev) => ({
+                ...prev,
+                avatarUrl: url,
+              }))
+            }
+          />
+
+          {/* Actions */}
+          <div className="flex flex-items-center justify-center gap-12">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => console.log("Oprimió cancelar")}
+            >
+              Cancelar
+            </Button>
+
+            <Button
+              variant="primary"
+              size="md"
+              type="submit"
+              onClick={() => console.log("Oprimió guardar")}
+            >
+              Guardar
+            </Button>
+          </div>
+        </form>
+      </div>
+    );
+  }

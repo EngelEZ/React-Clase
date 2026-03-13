@@ -1,18 +1,19 @@
 // Creacion de componente input
 import "../../styles/global.css";
 
-export default function Input({ label, type = "text", ...props }) {
+export default function Input({ label, type = "text", error, ...props }) {
   return (
     <div className="w-[320px]">
       {/* Label */}
       {label && (
         <label
-          className="
-                block
-                text-[8px]
-                mb-1
-                text-text-primary
-                "
+          className={`
+          block
+          text-[8px]
+          mb-1
+          text-text-primary
+          ${error ? "text-red-600" : "text-text-primary"}
+          `}
         >
           {label}
         </label>
@@ -43,7 +44,8 @@ export default function Input({ label, type = "text", ...props }) {
         {/* Input visual */}
         <input
           type={type}
-          className="
+          className={`
+            
             relative
             w-full
             h-12
@@ -53,14 +55,17 @@ export default function Input({ label, type = "text", ...props }) {
             px-4
             text-body
             
+            ${error ? "border-red-600" : "border-border-strong"}
+            
             focus:outline-none
             focus:ring-2
             focus:ring-blue-500
             focus:border-blue-500
-            "
+            `}
           {...props}
         />
       </div>
+      {error && <p className="text-caption text-red-600 mt-1">{error}</p>}
     </div>
   );
 }

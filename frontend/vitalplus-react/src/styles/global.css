@@ -9,4 +9,6 @@
     --color-brand-soft: var(--semantic-primary-300);
     --semantic-background: var(--color-white);
     --semantic-border: var(--color-gray-700);
+
+    --text-caption: var( --semantic-font-size-caption);
 }

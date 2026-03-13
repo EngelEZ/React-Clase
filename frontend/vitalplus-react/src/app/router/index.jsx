@@ -5,6 +5,7 @@ import HomePage from "@/features/home/page/homepage";
 import AuthLayout from "@/shared/layout/AuthLayout";
 import ConfigUserPage from "@/features/users/pages/ConfigUserPage";
 import ListUserPage from "@/features/users/pages/ListUserPage";
+import UserForm from "@/features/users/components/UserForm"
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/users/:id/edit",
-        element: <ProfilePage />,
+        element: <UserForm/>,
       },
     ],
   },
