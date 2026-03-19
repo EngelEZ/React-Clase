@@ -1,9 +1,17 @@
 import { Search, User } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
+
+import {
+  IconButton,
+  Dropdown,
+  DropdownTrigger,
+  DropdownItem,
+  DropdownContent,
+} from "@/shared/components";
 
 const Navbar = ({ variant = "transparent" }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav
@@ -67,7 +75,7 @@ const Navbar = ({ variant = "transparent" }) => {
             </button> */}
 
             {/* Usuario */}
-            <div className="relative">
+            {/* <div className="relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center justify-center size-10 rounded-full border hover:bg-surface transition"
@@ -102,7 +110,42 @@ const Navbar = ({ variant = "transparent" }) => {
                   </ul>
                 </div>
               )}
+            </div> */}
+
+            {/* Dropdown */}
+
+            <div className="p-10">
+              <Dropdown>
+                <DropdownTrigger>
+                  <IconButton ariaLabel="Menu de usuario">
+                    <User />
+                  </IconButton>
+                </DropdownTrigger>
+                <DropdownContent className="right-0 w-48">
+                  <DropdownItem>
+                    <Link to="/login" className="block w-full">
+                      Perfil
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/login" className="block w-full">
+                      Configuración
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem>
+                    <Link to="/login" className="block w-full">
+                      Gestion de usuarios
+                    </Link>
+                  </DropdownItem>
+                </DropdownContent>
+
+
+              </Dropdown>
+
             </div>
+
+
+
           </div>
         </div>
       </div>

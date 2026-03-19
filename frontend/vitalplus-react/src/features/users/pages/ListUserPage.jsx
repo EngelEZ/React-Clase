@@ -1,8 +1,13 @@
 import DataTable from "@/shared/components/DataTable"
 import { UserColumns }  from "../table/UserColumns"
 import { users } from "@/data/user/users"
+import { useState } from "react"
+import { Button } from "@/shared/components";
+import ReportConfigModal from "../reports/components/ReportConfigModal"
 
 export default function ListUserPage() {
+
+  const [IsReportModalOpen, setIsReportModalOpen] = useState(false)
 
   return (
     <div className="p-6">
@@ -11,9 +16,21 @@ export default function ListUserPage() {
         Usuarios
       </h1>
 
+      <Button 
+        variant="primary"
+        onClick={() => setIsReportModalOpen(true)}
+      >
+        Generar reporte
+      </Button>
+
       <DataTable
         data={users}
         columns={UserColumns}
+      />
+
+      <ReportConfigModal
+        isOpen={IsReportModalOpen}
+        onClose={() => setIsReportModalOpen (false)}
       />
 
     </div>
