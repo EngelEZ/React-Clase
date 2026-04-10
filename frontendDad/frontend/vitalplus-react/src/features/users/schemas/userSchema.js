@@ -6,7 +6,7 @@ export const userSchema = z.object ({
         .string()
         .min(3, "El nombre debe tener minimo 3 caracteres")
         .max(60, "El nombre es demasiado largo"),
-    email: z
+    userEmail: z
         .string()
         .email("Debe ingresar su email valido"),
 
@@ -25,11 +25,11 @@ export const userSchema = z.object ({
 
     password: z
         .string()
-        .min(8, "Contraseña debe tener minimo 8 caracteres")
-        .regex(/[A-Z]/, "Debe contener al menos una mayuscula")
-        .min(/[a-z]/, "Debe contener al menos una minuscula")
-        .min(/[0-9]/, "Debe contener al menos un numero")
-        .min(/[^A-Za-z0-9]/, "Debe contener al menos un caracter especial"),
+        .min(8, "Contraseña debe tener minimo 8 caracteres"),
+        // .regex(/[A-Z]/, "Debe contener al menos una mayuscula")
+        // .min(/[a-z]/, "Debe contener al menos una minuscula")
+        // .min(/[0-9]/, "Debe contener al menos un numero")
+        // .min(/[^A-Za-z0-9]/, "Debe contener al menos un caracter especial"),
 
     avatarUrl: z
         .string()

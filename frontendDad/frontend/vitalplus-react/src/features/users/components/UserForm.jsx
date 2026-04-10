@@ -1,13 +1,18 @@
 import { Input, Button, Select, Checkbox } from "@/shared/components";
-import { useEffect, useState } from "react";
+import { useEffect, useState  } from "react";
+import { createUser } from "../services/userService"
+import {useNavigate} from "react-router-dom"
+
 import { getDocumentTypes } from "../services/selectService";
 import { AvatarUploader } from "@/shared/components";
 import { userSchema } from "../schemas/userSchema";
 
 export default function UserForm() {
+  const [IsSubmitting, setIsSubmitting] = useState(false)
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    userEmail: "",
     phone: "",
     documentType: "",
     documentNumber: "",
@@ -45,36 +50,37 @@ export default function UserForm() {
   // ==================================================
 
   // Es la función que se ejecuta cuando se envía un documento
+
   //============== HANDLE SUBMIT ==============
   // Función que se ejecuta cuando se envía el formulario
-  const handleSubmit = (e) => {
-    // Evita que el formulario recargue la página
-    e.preventDefault();
-    // Se valida el objeto formData usando el esquema definido con Zod
-    // safeParse devuelve un objeto indicando si la validación fue exitosa o no
-    const result = userSchema.safeParse(formData);
-    // Si la validación falla
-    if (!result.success) {
-      // Objeto donde se almacenarán los errores por campo
-      const fieldErrors = {};
-      // Zod devuelve los errores en un arreglo llamado issues
-      // Se recorren para asociar cada error a su campo correspondiente
-      result.error.issues.forEach((issue) => {
-        // issue.path contiene la ruta del campo que falló
-        const field = issue.path[0];
-        // Se guarda el mensaje de error en el objeto fieldErrors
-        fieldErrors[field] = issue.message;
-      });
-      // Se actualiza el estado de errores para mostrarlos en el formulario
-      setErrors(fieldErrors);
-      // Se detiene la ejecución porque el formulario tiene errores
-      return;
-    }
-    // Si la validación es exitosa se limpian los errores anteriores
-    setErrors({});
-    // result.data contiene los datos ya validados por Zod
-    console.log("Usuario válido:", result.data);
-  };
+  // const handleSubmit = (e) => {
+  //   // Evita que el formulario recargue la página
+  //   e.preventDefault();
+  //   // Se valida el objeto formData usando el esquema definido con Zod
+  //   // safeParse devuelve un objeto indicando si la validación fue exitosa o no
+  //   const result = userSchema.safeParse(formData);
+  //   // Si la validación falla
+  //   if (!result.success) {
+  //     // Objeto donde se almacenarán los errores por campo
+  //     const fieldErrors = {};
+  //     // Zod devuelve los errores en un arreglo llamado issues
+  //     // Se recorren para asociar cada error a su campo correspondiente
+  //     result.error.issues.forEach((issue) => {
+  //       // issue.path contiene la ruta del campo que falló
+  //       const field = issue.path[0];
+  //       // Se guarda el mensaje de error en el objeto fieldErrors
+  //       fieldErrors[field] = issue.message;
+  //     });
+  //     // Se actualiza el estado de errores para mostrarlos en el formulario
+  //     setErrors(fieldErrors);
+  //     // Se detiene la ejecución porque el formulario tiene errores
+  //     return;
+  //   }
+  //   // Si la validación es exitosa se limpian los errores anteriores
+  //   setErrors({});
+  //   // result.data contiene los datos ya validados por Zod
+  //   console.log("Usuario válido:", result.data);
+  // };
 
   // Estado de los errores
   const [errors, setErrors] = useState({});
@@ -83,6 +89,44 @@ export default function UserForm() {
   useEffect(() => {
     getDocumentTypes().then(setDocumentTypes);
   }, []);
+
+
+   //============== HANDLE SUBMIT ==============
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+
+    const result = userSchema.safeParse(formData);
+
+
+    if (!result.success) {
+      const fieldErrors = {};
+      result.error.issues.forEach((issue) => {
+        fieldErrors[issue.path[0]] = issue.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+
+    setErrors({});
+    setIsSubmitting(true);
+
+
+    try {
+      const response = await createUser(result.data);
+      console.log("✅ Usuario creado:", response);
+
+
+      alert("Usuario creado correctamente");
+      navigate(-1);
+    } catch (error) {
+      console.error("Error:", error.message);
+      alert(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="my-0 mx-auto w-max pt-20">
@@ -102,11 +146,11 @@ export default function UserForm() {
 
         <Input
           label="Email"
-          name="email"
+          name="userEmail"
           placeholder="Ingrese su email"
-          value={formData.email}
+          value={formData.userEmail}
           onChange={handleChange}
-          error={errors.email}
+          error={errors.userEmail}
         ></Input>
 
         <Input
@@ -192,9 +236,9 @@ export default function UserForm() {
             variant="primary"
             size="md"
             type="submit"
-            onClick={() => console.log("Oprimió guardar")}
+            disabled={IsSubmitting}
           >
-            Guardar
+            {IsSubmitting ? "Guardando..." : "Guardar"}
           </Button>
         </div>
       </form>
